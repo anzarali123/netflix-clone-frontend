@@ -1,24 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import Netflix from "./routes/Homepage/netflix";
+import SignIn from "./routes/Signin/sign-in.routes";
+import Signup from "./routes/Signup/sign-up.routes";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route exact path="/" element={<Netflix />} />
+      <Route exact path="/signin" element={<SignIn />} />
+      <Route exact path="signup" element={<Signup />} />
+    </Routes>
   );
 }
 

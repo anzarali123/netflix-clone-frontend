@@ -1,7 +1,12 @@
 import React from "react";
-
-function BackgroundImage() {
-  return <div>BackgroundImage</div>;
+import backgroundImage from "../../assets/login.jpg";
+import { Container } from "./BackgroundImage.styles";
+function Background() {
+  return (
+    <Container>
+      <img src={backgroundImage} />
+    </Container>
+  );
 }
 
-export default BackgroundImage;
+export default Background;

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useContext } from "react";
+import { MoviesContext } from "../../Contexts/context";
 import Navbar from "../../components/Navbar/Navbar.component";
 import { Container } from "./Netflix.styles";
 import backgroundHomeImage from "../../assets/home.jpg";
@@ -10,10 +12,13 @@ import { useNavigate } from "react-router-dom";
 function Netflix() {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
   };
+
+  const { genres } = useContext(MoviesContext);
 
   const navigateToPlayer = () => {
     navigate("player");

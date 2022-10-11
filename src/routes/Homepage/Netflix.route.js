@@ -8,6 +8,7 @@ import MovieLogo from "../../assets/homeTitle.webp";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import Slider from "../../components/Slider/Slider.component";
 
 function Netflix() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,7 +19,7 @@ function Netflix() {
     return () => (window.onscroll = null);
   };
 
-  const { genres } = useContext(MoviesContext);
+  const { genres, movies } = useContext(MoviesContext);
 
   const navigateToPlayer = () => {
     navigate("player");
@@ -45,6 +46,7 @@ function Netflix() {
           </div>
         </div>
       </div>
+      <Slider movies={movies} />
     </Container>
   );
 }

@@ -7,6 +7,7 @@ export const MoviesContext = createContext({
   movies: [],
   genre: null,
   moviesByGenre: [],
+  tvShows: [],
   setGenre: () => {},
 });
 
@@ -43,6 +44,7 @@ export const MoviesProvider = ({ children }) => {
   const [all, setAll] = useState([]);
   const [movies, setMovies] = useState([]);
   const [moviesByGenre, setMoviesByGenre] = useState([]);
+  const [tvShows, setTvShows] = useState([]);
   const [genre, setGenre] = useState(null);
 
   useEffect(() => {
@@ -92,7 +94,18 @@ export const MoviesProvider = ({ children }) => {
     fetchDataByGenre();
   }, [genre, genres]);
 
-  const value = { genres, all, movies, setGenre, moviesByGenre };
+  useEffect(() => {
+    const fetchDataByGenre = async () => {
+      const showsByGenre = await getRawData(
+        `https://api.themoviedb.org/3/discover/tv?api_key=3d39d6bfe362592e6aa293f01fbcf9b9&with_genres=${genre}`,
+        genres
+      );
+      setTvShows(showsByGenre);
+    };
+    fetchDataByGenre();
+  }, [genre, genres]);
+
+  const value = { genres, all, movies, setGenre, moviesByGenre, tvShows };
   return (
     <MoviesContext.Provider value={value}>{children}</MoviesContext.Provider>
   );

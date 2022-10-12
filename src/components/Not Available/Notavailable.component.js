@@ -1,8 +1,8 @@
 import React from "react";
 
-function NotAvailable() {
+function NotAvailable({ data }) {
   return (
-    <h1 className="not-available">No Movies available for selected genre.</h1>
+    <h1 className="not-available">{`NO ${data} available for selected genre. `}</h1>
   );
 }
 

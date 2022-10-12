@@ -1,15 +1,14 @@
 import React from "react";
+import { Container } from "./tv-shows.styles";
 import Navbar from "../../components/Navbar/Navbar.component";
-import { Container } from "./movies.styles";
-import { useContext, useState } from "react";
-import { MoviesContext } from "../../Contexts/context";
-import Slider from "../../components/Slider/Slider.component";
-import NotAvailable from "../../components/Not Available/Notavailable.component";
 import SelectGenre from "../../components/Select Genre/select-genre.component";
-
-function Movies() {
+import NotAvailable from "../../components/Not Available/Notavailable.component";
+import Slider from "../../components/Slider/Slider.component";
+import { useState, useContext } from "react";
+import { MoviesContext } from "../../Contexts/context";
+function TvShows() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { moviesByGenre } = useContext(MoviesContext);
+  const { tvShows } = useContext(MoviesContext);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -22,14 +21,14 @@ function Movies() {
       </div>
       <div className="data">
         <SelectGenre />
-        {moviesByGenre.length ? (
-          <Slider movies={moviesByGenre} />
+        {tvShows.length ? (
+          <Slider movies={tvShows} />
         ) : (
-          <NotAvailable data="Movie" />
+          <NotAvailable data="TV Shows" />
         )}
       </div>
     </Container>
   );
 }
 
-export default Movies;
+export default TvShows;

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import { MoviesContext } from "../../Contexts/context";
+import backgroundHomeImage from "../../assets/home.jpg";
 import Navbar from "../../components/Navbar/Navbar.component";
 import { Container } from "./Netflix.styles";
-import backgroundHomeImage from "../../assets/home.jpg";
 import MovieLogo from "../../assets/homeTitle.webp";
+import { useNavigate } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
 import Slider from "../../components/Slider/Slider.component";
 
 function Netflix() {
@@ -19,7 +19,7 @@ function Netflix() {
     return () => (window.onscroll = null);
   };
 
-  const { genres, movies } = useContext(MoviesContext);
+  const { all } = useContext(MoviesContext);
 
   const navigateToPlayer = () => {
     navigate("player");
@@ -46,7 +46,7 @@ function Netflix() {
           </div>
         </div>
       </div>
-      <Slider movies={movies} />
+      <Slider movies={all} />
     </Container>
   );
 }

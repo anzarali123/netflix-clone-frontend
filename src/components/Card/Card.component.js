@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Container } from "./Card.styles";
 import { useNavigate } from "react-router-dom";
 import video from "../../assets/Stranger_Things.mp4";
@@ -7,10 +7,38 @@ import { RiThumbUpFill, RiThumbDownFill } from "react-icons/ri";
 import { BsCheck } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
+import { onAuthStateChangedListener } from "../../utils/firebase/firebase.utils";
 
-function Card({ movieData, isLiked = false }) {
+function Card({ movieData, isLiked = false, removeFromList }) {
   const [isHovered, setIsHovered] = useState(false);
-  const navigate = useNavigate("/");
+  const [email, setEmail] = useState(undefined);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    onAuthStateChangedListener((currentUser) => {
+      if (currentUser) setEmail(currentUser.email);
+      else navigate("/signin");
+    });
+  }, []);
+
+  const addToList = async () => {
+    const data = movieData;
+    try {
+      await fetch("http://localhost:5000/api/user/add", {
+        method: "POSt",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          data,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container
       onMouseEnter={() => setIsHovered(true)}
@@ -49,9 +77,14 @@ function Card({ movieData, isLiked = false }) {
                 <RiThumbUpFill title="Like" />
                 <RiThumbDownFill title="Dislike" />
                 {isLiked ? (
-                  <BsCheck title="Remove From List" />
+                  <BsCheck
+                    title="Remove From List"
+                    onClick={() => {
+                      removeFromList(movieData.id);
+                    }}
+                  />
                 ) : (
-                  <AiOutlinePlus title="Add To List" />
+                  <AiOutlinePlus title="Add To List" onClick={addToList} />
                 )}
               </div>
               <div className="info">

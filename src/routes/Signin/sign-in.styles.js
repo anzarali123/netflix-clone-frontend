@@ -19,7 +19,7 @@ export const Container = styled.div`
       .form {
         padding: 2rem;
         background-color: #000000b0;
-        width: 25vw;
+        width: 400px;
         gap: 2rem;
         color: white;
 
@@ -30,6 +30,7 @@ export const Container = styled.div`
             padding: 0.5rem 1rem;
             width: 15rem;
           }
+
           button {
             padding: 0.5rem 1rem;
             background-color: #e50914;

@@ -9,6 +9,9 @@ export const MoviesContext = createContext({
   moviesByGenre: [],
   tvShows: [],
   setGenre: () => {},
+  getUserLikedMovies: () => {},
+  userLikedMovies: [],
+  removeFromLikedMovies: () => {},
 });
 
 const createArrayFromRawData = (array, moviesArray, genres) => {
@@ -105,7 +108,44 @@ export const MoviesProvider = ({ children }) => {
     fetchDataByGenre();
   }, [genre, genres]);
 
-  const value = { genres, all, movies, setGenre, moviesByGenre, tvShows };
+  const getUserLikedMovies = useCallback(async (email) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/user/liked/${email}`
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  const removeFromLikedMovies = useCallback(async (email, movieId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/user/remove`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, movieId }),
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  const value = {
+    genres,
+    all,
+    movies,
+    setGenre,
+    moviesByGenre,
+    tvShows,
+    getUserLikedMovies,
+    removeFromLikedMovies,
+  };
   return (
     <MoviesContext.Provider value={value}>{children}</MoviesContext.Provider>
   );
